@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="GEARWRIGHT_TOGGLE" category="BINDING_CATEGORY_GEARWRIGHT">
+        Gearwright_Binding()
+    </Binding>
+</Bindings>
