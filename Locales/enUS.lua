@@ -41,17 +41,24 @@ L["On target"] = "On target"
 L["The target is the average rating of the top Mythic+ players of this spec, converted to percent for your character."]
     = "The target is the average rating of the top Mythic+ players of this spec, "
     .. "converted to percent for your character."
+L["The target is the average rating of the top Mythic raiders of this spec, converted to percent for your character."]
+    = "The target is the average rating of the top Mythic raiders of this spec, "
+    .. "converted to percent for your character."
 L["No data for this specialization."] = "No data for this specialization."
 L["Data: top 50 Mythic+ (EU, US), %s"] = "Data: top 50 Mythic+ (EU, US), %s"
+L["Data: top 50 Mythic raiders (EU, US), %s"] = "Data: top 50 Mythic raiders (EU, US), %s"
 L["M+"] = "M+"
 L["Mythic+"] = "Mythic+"
 L["Raid"] = "Raid"
 L["Top M+ %d-%d"] = "Top M+ %d-%d"
+L["Mythic %d/%d"] = "Mythic %d/%d"
+L["Mythic %d-%d/%d"] = "Mythic %d-%d/%d"
+L["%s, too few raiders"] = "%s, too few raiders"
 L["Content"] = "Content"
-L["Which recommendations to show. Raid swaps head, shoulder and boot enchants for leech; "
-    .. "everything else is the same in both."]
-    = "Which recommendations to show. Raid swaps head, shoulder and boot enchants for leech; "
-    .. "everything else is the same in both."
+L["Which players the recommendations come from: the top Mythic+ players or the top Mythic "
+    .. "raiders. Raid also puts leech on head, shoulders and boots first, except for tanks."]
+    = "Which players the recommendations come from: the top Mythic+ players or the top Mythic "
+    .. "raiders. Raid also puts leech on head, shoulders and boots first, except for tanks."
 L["Dock to the character frame"] = "Dock to the character frame"
 L["Show the window on the right edge of the character frame and open it together with it. "
     .. "When off, the window stands on its own and can be moved."]

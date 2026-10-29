@@ -3,7 +3,7 @@
 ## Notes: Best-in-slot enchants, gems, consumables and secondary stat targets for your spec, next to the character frame.
 ## Notes-deDE: Beste Verzauberungen, Edelsteine, Verbrauchsgüter und Zielwerte der Sekundärwerte für deine Spezialisierung, direkt am Charakterfenster.
 ## Author: Lars Gossard
-## Version: 0.1.0
+## Version: 0.2.0
 ## X-Email: lars@lasse-tech.de
 ## X-Website: https://github.com/lasse-tech
 ## X-Copyright: 2026 lasse tech, Lars Gossard

@@ -23,25 +23,33 @@ function Recommend.SpecID()
     return index and (GetSpecializationInfo(index))
 end
 
+-- raid falls back to Mythic+ for specs with too few raiders
+function Recommend.Source(specID)
+    if T.DB.Content() == "raid" and T.Data.raidSpecs[specID] then return "raid" end
+    return "mplus"
+end
+
 function Recommend.SpecData(specID)
-    return specID and T.Data.specs[specID]
+    if not specID then return nil end
+    if Recommend.Source(specID) == "raid" then return T.Data.raidSpecs[specID] end
+    return T.Data.specs[specID]
 end
 
 local function role(specID)
     return (select(5, GetSpecializationInfoByID(specID)))
 end
 
-local function raidPicks(specID, key, mplus)
+local function raidPicks(specID, key, data)
     local raid = T.Data.raid
     local names = raid.specs[specID] and raid.specs[specID][key]
     if not names and role(specID) ~= "TANK" then names = raid.all[key] end
-    if not names then return mplus end
+    if not names then return data end
     local out, seen = {}, {}
     for _, name in ipairs(names) do
         out[#out + 1] = { name }
         seen[name] = true
     end
-    for _, pick in ipairs(mplus or {}) do
+    for _, pick in ipairs(data or {}) do
         if not seen[pick[1]] then out[#out + 1] = pick end
     end
     return out
@@ -49,9 +57,9 @@ end
 
 local function enchantPicks(specID, key)
     local spec = Recommend.SpecData(specID)
-    local mplus = spec and spec.enchants[key]
-    if T.DB.Content() == "raid" then return raidPicks(specID, key, mplus) end
-    return mplus
+    local picks = spec and spec.enchants[key]
+    if T.DB.Content() == "raid" then return raidPicks(specID, key, picks) end
+    return picks
 end
 
 function Recommend.Enchants(specID)

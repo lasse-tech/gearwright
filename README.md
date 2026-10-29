@@ -10,7 +10,7 @@ secondary stat targets for your spec, docked to the character frame.
   (green ±2, yellow ±6, red beyond); the target is the top players' average rating, converted to
   percent for your character; locked in combat
 - **Consumables**: flask, combat potion, food, augment rune, weapon oil, with the count you carry
-- **Mythic+ / Raid** switch
+- **Mythic+ / Raid** switch: each with its own players, enchants, gems and stat targets
 - Tooltips with alternatives; Shift-click links the item in chat
 - English and German
 
@@ -25,10 +25,12 @@ CurseForge, Wago, or the zip from the GitHub releases unpacked into
 - `/gw`, `/gw raid`, `/gw mplus`, `/gw dock`, `/gw config`
 
 ## Data
-- [Battle.net API](https://develop.battle.net): top 50 Mythic+ players per spec in EU and US
-  (enchants, gems, average stats)
+- [Battle.net API](https://develop.battle.net): top 50 Mythic+ players and top 50 Mythic raiders
+  per spec in EU and US (enchants, gems, average stats); raid falls back to Mythic+ for a spec
+  with too few raiders
+- [Raider.IO API](https://raider.io/api): top Mythic guilds of the current raid
 - [wago.tools](https://wago.tools): Blizzard DB2 tables for the IDs
-- Raid picks and consumables: curated in `Data/`
+- Raid leech picks and consumables: curated in `Data/`
 
 ## Licence
 © 2026 lasse tech, Lars Gossard — <lars@lasse-tech.de>

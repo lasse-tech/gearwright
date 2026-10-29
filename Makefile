@@ -92,7 +92,7 @@ lint: check check-tocs check-data luacheck
 
 ##@ Data and libraries
 
-## data: rebuild Data/Specs.lua (Battle.net API, wago.tools)
+## data: rebuild Data/Specs.lua (Battle.net API, Raider.IO, wago.tools), takes about 45 minutes
 data:
 	@python3 -u tools/fetch_data.py
 	@$(MAKE) --no-print-directory check-data

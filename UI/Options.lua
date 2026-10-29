@@ -98,8 +98,8 @@ function T.SetupOptions()
             container:Add("mplus", L["Mythic+"])
             container:Add("raid", L["Raid"])
             return container:GetData()
-        end, L["Which recommendations to show. Raid swaps head, shoulder and boot enchants for leech; "
-            .. "everything else is the same in both."])
+        end, L["Which players the recommendations come from: the top Mythic+ players or the top Mythic "
+            .. "raiders. Raid also puts leech on head, shoulders and boots first, except for tanks."])
     end
 
     do

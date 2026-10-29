@@ -12,20 +12,30 @@ local SECTIONS = { "Enchants", "Gems", "Stats", "Consumables" }
 
 local frame, charButton
 
+local function sourceLine(specID)
+    local score = T.Recommend.SpecData(specID).score
+    if T.Recommend.Source(specID) == "raid" then
+        local bosses = T.Data.raidInfo.bosses
+        if score[1] == score[2] then return L["Mythic %d/%d"]:format(score[1], bosses) end
+        return L["Mythic %d-%d/%d"]:format(score[1], score[2], bosses)
+    end
+    local source = score and L["Top M+ %d-%d"]:format(score[1], score[2]) or L["Mythic+"]
+    if DB.Content() == "raid" then source = L["%s, too few raiders"]:format(source) end
+    return source
+end
+
 local function specLine(specID)
     local _, specName, _, _, _, classFile = GetSpecializationInfoByID(specID)
     local name = specName .. " " .. LOCALIZED_CLASS_NAMES_MALE[classFile]
     name = RAID_CLASS_COLORS[classFile]:WrapTextInColorCode(name)
-    local score = T.Data.specs[specID].score
-    local source
-    if DB.Content() == "raid" then
-        source = L["Raid"]
-    elseif score then
-        source = L["Top M+ %d-%d"]:format(score[1], score[2])
-    else
-        source = L["Mythic+"]
+    return name .. "  " .. UI.Colored(UI.GREY, sourceLine(specID))
+end
+
+local function footerLine(specID)
+    if T.Recommend.Source(specID) == "raid" then
+        return L["Data: top 50 Mythic raiders (EU, US), %s"]:format(T.Data.generated)
     end
-    return name .. "  " .. UI.Colored(UI.GREY, source)
+    return L["Data: top 50 Mythic+ (EU, US), %s"]:format(T.Data.generated)
 end
 
 local function styleToggle(button, active)
@@ -132,9 +142,8 @@ local function create()
     frame.empty:SetPoint("TOP", frame.content, "TOP", 0, -4)
     frame.empty:SetText(L["No data for this specialization."])
 
-    local footer = fontString("GameFontDisableSmall")
-    footer:SetPoint("BOTTOM", 0, 6)
-    footer:SetText(L["Data: top 50 Mythic+ (EU, US), %s"]:format(T.Data.generated))
+    frame.footer = fontString("GameFontDisableSmall")
+    frame.footer:SetPoint("BOTTOM", 0, 6)
 
     frame:Hide()
 end
@@ -195,8 +204,8 @@ function Window.Refresh()
     local raid = DB.Content() == "raid"
     styleToggle(frame.mplus, not raid)
     styleToggle(frame.raid, raid)
-
     local specID = T.Recommend.SpecID()
+    frame.footer:SetText(footerLine(specID))
     local known = T.Recommend.SpecData(specID) ~= nil
     frame.spec:SetText(known and specLine(specID) or "")
     frame.empty:SetShown(not known)

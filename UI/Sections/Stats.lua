@@ -43,18 +43,23 @@ local function tooltip(key, pct, rating, goal, goalRating)
             or diff < 0 and L["%s rating above the target"] or L["On target"]
         UI.AddLine(tt, text:format(BreakUpLargeNumbers(math.abs(diff))), UI.WHITE)
         tt:AddLine(" ")
-        UI.AddLine(tt, L["The target is the average rating of the top Mythic+ players of this spec, "
-            .. "converted to percent for your character."], UI.GREY, true)
+        local note = T.Recommend.Source(T.Recommend.SpecID()) == "raid"
+            and L["The target is the average rating of the top Mythic raiders of this spec, "
+                .. "converted to percent for your character."]
+            or L["The target is the average rating of the top Mythic+ players of this spec, "
+                .. "converted to percent for your character."]
+        UI.AddLine(tt, note, UI.GREY, true)
     end
 end
 
--- last converted targets per spec, shown while the stats are secret
+-- last converted targets per spec and source, shown while the stats are secret
 local goals = {}
 
 local function statRow(i, specID, key, goalRating)
     local pct, rating, goal = T.Stats.Get(key, goalRating)
-    goals[specID] = goals[specID] or {}
-    if goal then goals[specID][key] = goal else goal = goals[specID][key] end
+    local cacheKey = specID .. T.Recommend.Source(specID)
+    goals[cacheKey] = goals[cacheKey] or {}
+    if goal then goals[cacheKey][key] = goal else goal = goals[cacheKey][key] end
     local spec = {
         icon = false,
         flush = true,
