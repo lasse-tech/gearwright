@@ -32,6 +32,10 @@ CurseForge, Wago, or the zip from the GitHub releases unpacked into
 - [wago.tools](https://wago.tools): Blizzard DB2 tables for the IDs
 - Raid leech picks and consumables: curated in `Data/`
 
+## Support
+
+[Buy me a coffee](https://buymeacoffee.com/gossardla)
+
 ## Licence
 © 2026 lasse tech, Lars Gossard — <lars@lasse-tech.de>
 
