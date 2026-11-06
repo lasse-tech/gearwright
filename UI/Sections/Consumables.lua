@@ -15,7 +15,7 @@ local function tooltip(row)
             tt:AddLine(" ")
             UI.AddLine(tt, L["Alternative: %s"]:format(UI.ItemName(row.alt[1]) or ("#" .. row.alt[1])), UI.GREY)
         end
-        UI.AddLine(tt, L["Shift-click to link it in chat."], UI.GREY)
+        UI.AddLine(tt, L["Shift-Click: link in chat"], UI.GREY)
     end
 end
 

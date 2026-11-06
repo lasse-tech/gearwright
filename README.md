@@ -31,6 +31,8 @@ CurseForge, Wago, or the zip from the GitHub releases unpacked into
 - [Raider.IO API](https://raider.io/api): top Mythic guilds of the current raid
 - [wago.tools](https://wago.tools): Blizzard DB2 tables for the IDs
 - Raid leech picks and consumables: curated in `Data/`
+- Retail only. World of Warcraft: Forever has no Mythic+ (its client does not load
+  `Blizzard_ChallengesUI`), other specialization IDs and other items, so there is no data for it
 
 ## Support
 

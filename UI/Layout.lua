@@ -56,7 +56,7 @@ end
 local function onRowLeave() GameTooltip:Hide() end
 
 local function onRowClick(self)
-    if self.link and T.Addon.ShiftDown() then ChatEdit_InsertLink(self.link) end
+    if self.link and T.Addon.ShiftDown() then ChatFrameUtil.InsertLink(self.link) end
 end
 
 local function fontString(parent, template)

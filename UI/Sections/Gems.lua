@@ -28,7 +28,7 @@ local function gemTooltip(pick, count, group)
             UI.AddLine(tt, L["Used by %d%% of the top players (%s)"]:format(pick[2], group), UI.GOLD)
         end
         UI.AddLine(tt, L["Socketed: %d"]:format(count), UI.WHITE)
-        UI.AddLine(tt, L["Shift-click to link it in chat."], UI.GREY)
+        UI.AddLine(tt, L["Shift-Click: link in chat"], UI.GREY)
     end
 end
 
@@ -55,7 +55,7 @@ local function colorsRow(worn)
         statusColor = not all and UI.AMBER or nil,
         tooltip = function(tt)
             tt:SetText(L["Gem colors"], 1, 1, 1)
-            UI.AddLine(tt, L["Your diamond grows with every different gem color you have socketed."], UI.GREY, true)
+            UI.AddLine(tt, L["Diamond: grows per distinct gem color"], UI.GREY, true)
             for _, key in ipairs(T.Gems.COLORS) do
                 local name, c = COLORS[key][1], COLORS[key][2]
                 UI.AddLine(tt, swatch(key, have[key]) .. " " .. UI.Colored(have[key] and c or MISSING, name), UI.WHITE)

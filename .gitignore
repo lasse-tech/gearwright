@@ -1,0 +1,17 @@
+/Libs/
+
+/.cache/
+
+/.claude/
+/dist/
+__pycache__/
+.DS_Store
+Thumbs.db
+
+/brand/source/node_modules/
+/brand/source/package*.json
+/brand/source/page/
+/brand/source/out/
+/brand/source/jobs.json
+/brand/source/icon.svg
+.env

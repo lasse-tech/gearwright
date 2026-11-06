@@ -34,7 +34,7 @@ exit /b 0
 if not exist Libs\LibStub (echo Libs\ is empty - run "make fetch-libs" on Linux & exit /b 1)
 exit /b 0
 
-rem lint: luac, TOC, data, luacheck (BLOCKER; Makefile comments: make lint)
+rem lint: luac, TOC, data, luacheck, ruff (BLOCKER; Makefile comments: make lint)
 :lint
 for /r %%f in (*.lua) do (
     echo %%f | findstr /i "\\Libs\\ \\dist\\ \\tests\\ \\tools\\ \\.cache\\" >nul || (
@@ -46,9 +46,16 @@ for /f "usebackq tokens=* delims=" %%l in (`findstr /r "^[A-Za-z].*\.lua$ ^[A-Za
     if not exist "%%l" (echo   MISSING %%l & exit /b 1)
 )
 echo toc: every listed file exists
-lua5.1 tools\check-data.lua . || lua tools\check-data.lua . || exit /b 1
+lua5.1 scripts\check-data.lua . || lua scripts\check-data.lua . || exit /b 1
 luacheck --no-color -q . || exit /b 1
 echo luacheck: no warnings
+if exist tools\ (
+    ruff check --no-cache -q tools || exit /b 1
+)
+if exist brand\source\ (
+    ruff check --no-cache -q brand\source || exit /b 1
+)
+echo ruff: no findings
 exit /b 0
 
 rem data: rebuild Data\Specs.lua (needs python)
@@ -101,9 +108,14 @@ rmdir /s /q dist\stage
 echo built %ZIP%
 exit /b 0
 
-rem deploy: none - a v* tag pushed to Forgejo is exported to GitHub and packaged there
+rem deploy: none - installation: README.md, section Installation
 :deploy
-echo No deploy: git tag v%VERSION% ^&^& git push origin main v%VERSION%
+echo No deploy: see README.md, section Installation
+exit /b 0
+
+rem release: print the commands that tag v<version> and push it to Forgejo (exported to GitHub)
+:release
+echo git tag v%VERSION% ^&^& git push origin main v%VERSION%
 exit /b 0
 
 rem clean: remove dist\ and .cache\

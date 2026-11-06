@@ -44,10 +44,8 @@ local function tooltip(key, pct, rating, goal, goalRating)
         UI.AddLine(tt, text:format(BreakUpLargeNumbers(math.abs(diff))), UI.WHITE)
         tt:AddLine(" ")
         local note = T.Recommend.Source(T.Recommend.SpecID()) == "raid"
-            and L["The target is the average rating of the top Mythic raiders of this spec, "
-                .. "converted to percent for your character."]
-            or L["The target is the average rating of the top Mythic+ players of this spec, "
-                .. "converted to percent for your character."]
+            and L["Target: average of the top Mythic raiders, in %"]
+            or L["Target: average of the top Mythic+ players, in %"]
         UI.AddLine(tt, note, UI.GREY, true)
     end
 end

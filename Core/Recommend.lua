@@ -19,8 +19,8 @@ local function slotLabel(key, index)
 end
 
 function Recommend.SpecID()
-    local index = GetSpecialization()
-    return index and (GetSpecializationInfo(index))
+    local index = C_SpecializationInfo.GetSpecialization()
+    return index and (C_SpecializationInfo.GetSpecializationInfo(index))
 end
 
 -- raid falls back to Mythic+ for specs with too few raiders

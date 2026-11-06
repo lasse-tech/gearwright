@@ -29,7 +29,7 @@ DRY_RUN ?= 0
 # public export: one commit per release tag
 PUBLIC_DIR   := $(DIST_DIR)/public
 PUBLIC_PATHS := $(INSTALL_FILES) $(INSTALL_DIRS) README.md .pkgmeta github Makefile Makefile.bat scripts \
-	.luacheckrc
+	.luacheckrc .gitignore
 PUBLIC_NAME  := Lars Gossard
 PUBLIC_EMAIL := lars@lasse-tech.de
 
@@ -47,8 +47,8 @@ NO_ADDONS_MSG = echo "AddOns folder not found. Set WOW_RETAIL_ADDON_FOLDER=/path
 
 .DEFAULT_GOAL := help
 
-.PHONY: help version check check-tocs check-data luacheck lint data libs fetch-libs ensure-libs \
-	debug install uninstall dist deploy public github clean distclean purge
+.PHONY: help version check check-tocs check-data luacheck ruff lint data store-images libs fetch-libs ensure-libs \
+	debug install uninstall dist deploy release public github clean distclean purge
 
 ##@ General
 
@@ -77,15 +77,24 @@ check-tocs:
 
 ## check-data: every pick in Data/ resolves
 check-data:
-	@lua5.1 tools/check-data.lua .
+	@lua5.1 scripts/check-data.lua .
 
 ## luacheck: static analysis, any warning fails
 luacheck:
 	@command -v luacheck >/dev/null 2>&1 || { echo "luacheck not found (luarocks install luacheck)"; exit 1; }
 	@luacheck --no-color -q . && echo "luacheck: no warnings"
 
-## lint: luac, TOC, data, luacheck, Makefile comments (BLOCKER)
-lint: check check-tocs check-data luacheck
+# tools/ and brand/ stay out of the public export
+PY_TOOLS := $(wildcard tools/*.py brand/source/*.py)
+
+## ruff: Python checks on tools/ and brand/source/, any finding fails
+ruff:
+	@if [ -z "$(PY_TOOLS)" ]; then echo "ruff: no Python files"; exit 0; fi; \
+	command -v ruff >/dev/null 2>&1 || { echo "ruff not found"; exit 1; }; \
+	ruff check --no-cache -q $(PY_TOOLS) && echo "ruff: no findings"
+
+## lint: luac, TOC, data, luacheck, ruff, Makefile comments (BLOCKER)
+lint: check check-tocs check-data luacheck ruff
 	@awk -v required="$(REQUIRED)" -f scripts/make-lint.awk $(firstword $(MAKEFILE_LIST))
 	@awk -v required="$(REQUIRED)" -v bat=1 -f scripts/make-lint.awk Makefile.bat
 	@echo "make: comments ok"
@@ -130,6 +139,10 @@ ensure-libs:
 	@if [ -n "$$($(LIBS_MISSING))" ]; then \
 		echo "Libs/ incomplete - fetching"; $(MAKE) --no-print-directory fetch-libs || exit 1; fi
 	@missing=$$($(LIBS_MISSING)); if [ -n "$$missing" ]; then echo "still missing:" $$missing; exit 1; fi
+
+## store-images: CurseForge and Wago pictures into brand/images/ (Makefile only)
+store-images:
+	python3 brand/source/gen.py
 
 ##@ Client
 
@@ -189,9 +202,13 @@ dist: ensure-libs lint
 	@rm -r $(DIST_DIR)/stage
 	@echo "built $(ZIP)"
 
-## deploy: none - a v* tag pushed to Forgejo is exported to GitHub and packaged there
+## deploy: none - installation: README.md, section Installation
 deploy:
-	@echo "No deploy: git tag v$(VERSION) && git push origin main v$(VERSION)"
+	@echo "No deploy: see README.md, section Installation"
+
+## release: print the commands that tag v<version> and push it to Forgejo (exported to GitHub)
+release:
+	@echo "git tag v$(VERSION) && git push origin main v$(VERSION)"
 
 # github/gitattributes: renamed on export (git archive would apply it to github/)
 # $(call public-tree,<ref>,<out dir>)

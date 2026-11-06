@@ -44,8 +44,8 @@ local function tooltip(slotID, picks, applied, state)
             local text = T.Gear.EnchantText(slotID) or ("#" .. applied)
             UI.AddLine(tt, L["Equipped: %s"]:format(text), STATE[state][2])
         end
-        if state == "rank" then UI.AddLine(tt, L["Lower quality than the best rank."], UI.AMBER) end
-        if item then UI.AddLine(tt, L["Shift-click to link it in chat."], UI.GREY) end
+        if state == "rank" then UI.AddLine(tt, L["Below the best rank"], UI.AMBER) end
+        if item then UI.AddLine(tt, L["Shift-Click: link in chat"], UI.GREY) end
     end
 end
 

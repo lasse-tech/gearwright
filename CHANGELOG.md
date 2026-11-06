@@ -2,6 +2,17 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.2.1] - 2026-11-06
+
+### Changed
+- Mythic+ and raid data refreshed (2026-11-06)
+- Specialization from `C_SpecializationInfo`, Shift-click links through `ChatFrameUtil.InsertLink`
+  (`GetSpecialization`, `GetSpecializationInfo` and `ChatEdit_InsertLink` are deprecated)
+- About block in the options: the embedded libraries are credited, the separate author line is gone (the copyright line names him)
+- Labels instead of sentences in the options, the tooltips and the empty window, in English and German
+
 ## [0.2.0] - 2026-10-29
 
 ### Changed
